@@ -2,29 +2,32 @@ package org.game.serviceImpl;
 
 import org.game.service.Stack;
 
-public class StackArrayImpl<T> implements Stack<T> {
+import java.util.LinkedList;
+
+public class LinkedStack<T> implements Stack<T> {
+    LinkedList<T> list = new LinkedList<>();
     @Override
     public int size() {
-        return 0;
+        return list.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return list.isEmpty();
     }
 
     @Override
     public void push(T val) {
-
+        list.addFirst(val);
     }
 
     @Override
     public T top() {
-        return null;
+        return list.getFirst();
     }
 
     @Override
     public T pop() {
-        return null;
+        return list.removeFirst();
     }
 }
