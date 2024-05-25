@@ -64,6 +64,12 @@ public class Main {
         System.out.println("valid expression: " + validExpression("((( )(( )){([( )])}))"));
         System.out.println("valid expression: " + validExpression("({[])}"));
         System.out.println("valid expression: " + validExpression("( "));
+
+        // Check if valid HTML
+        System.out.println("valid HTML: " + validHtml("<HTML></HTML>"));
+        System.out.println("valid HTML: " + validHtml("<HTML><body></body></HTML>"));
+        System.out.println("valid HTML: " + validHtml("<HTML><header><body></body></HTML>"));
+        System.out.println("valid HTML: " + validHtml("<HTML><header></header><body></body></HTML>"));
     }
 
     public static <T> void reverseArray(T[] arr) {
@@ -88,6 +94,24 @@ public class Main {
                 if (stack.isEmpty()) return false;
                 if (closing.indexOf(temp) != opening.indexOf(stack.pop())) return false;
             }
+        }
+        return stack.isEmpty();
+    }
+
+    public static boolean validHtml(String html) {
+        Stack<String> stack = new LinkedStack<>();
+        int i = html.indexOf("<");
+        while (i != -1) {
+            int j = html.indexOf(">", i+1);
+            if (j == -1) return false;
+            String temp = html.substring(i+1, j);
+            if (!temp.startsWith("/")) {
+                stack.push(temp);
+            } else {
+                if (stack.isEmpty()) return false;
+                if (!temp.substring(1).equals(stack.pop())) return false;
+            }
+            i = html.indexOf("<", j+1);
         }
         return stack.isEmpty();
     }
