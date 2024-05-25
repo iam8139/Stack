@@ -59,6 +59,11 @@ public class Main {
         System.out.println("int arr: " + Arrays.toString(arrInt));
         System.out.println("string arr: " + Arrays.toString(arrString));
 
+        // Check if valid expression
+        System.out.println("valid expression: " + validExpression("( )(( )){([( )])}"));
+        System.out.println("valid expression: " + validExpression("((( )(( )){([( )])}))"));
+        System.out.println("valid expression: " + validExpression("({[])}"));
+        System.out.println("valid expression: " + validExpression("( "));
     }
 
     public static <T> void reverseArray(T[] arr) {
@@ -70,5 +75,20 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = stack.pop();
         }
+    }
+
+    public static boolean validExpression(String expression) {
+        String opening = "([{";
+        String closing = ")]}";
+        Stack<Character> stack = new LinkedStack<>();
+        for (char temp : expression.toCharArray()) {
+            if (opening.indexOf(temp) != -1) {
+                stack.push(temp);
+            } else if (closing.indexOf(temp) != -1) {
+                if (stack.isEmpty()) return false;
+                if (closing.indexOf(temp) != opening.indexOf(stack.pop())) return false;
+            }
+        }
+        return stack.isEmpty();
     }
 }
